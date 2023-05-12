@@ -2,6 +2,7 @@ package org.Risolutore;
 
 import org.ejml.data.DMatrixSparseCSC;
 import org.ejml.data.DMatrixSparseTriplet;
+import org.ejml.simple.SimpleMatrix;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -54,6 +55,43 @@ public class Utils {
         filePath = scanner.nextLine();
 
         return loadMatrixFromFile(filePath);
+    }
+
+    public static SimpleMatrix loadSimpleMatrixFromFile(String filePath) {
+
+        File inputFile = new File(filePath);
+        Scanner inputFileReader = null;
+        try {
+            inputFileReader = new Scanner(inputFile);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        SimpleMatrix matrix;
+        int rows = inputFileReader.nextInt();
+        int columns = inputFileReader.nextInt();
+        int nonZeros = inputFileReader.nextInt();
+        matrix = new SimpleMatrix(rows, columns);
+
+        int itemsAdded = 0;
+        int newEntryRowIndex;
+        int newEntryColumnIndex;
+        double value;
+
+        while (itemsAdded < nonZeros) {
+            newEntryRowIndex = inputFileReader.nextInt();
+            newEntryColumnIndex = inputFileReader.nextInt();
+            value = Double.parseDouble(inputFileReader.next());
+
+            matrix.set((newEntryRowIndex - 1), (newEntryColumnIndex - 1), value);
+
+            itemsAdded++;
+        }
+
+        inputFileReader.close();
+
+        return matrix;
+
     }
     
 }
