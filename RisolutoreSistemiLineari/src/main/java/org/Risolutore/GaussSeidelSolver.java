@@ -30,10 +30,10 @@ public class GaussSeidelSolver {
         return currentSolution;
     }
 
-    private static boolean converged(SimpleMatrix x, SimpleMatrix b, SimpleMatrix A, double tolerance) {
-        SimpleMatrix numerator = A.mult(x).minus(b);
+    private static boolean converged(SimpleMatrix currentSolution, SimpleMatrix rightHandSide, SimpleMatrix inputMatrix, double tolerance) {
+        SimpleMatrix numerator = inputMatrix.mult(currentSolution).minus(rightHandSide);
         Double numeratorNorm = numerator.normF();
-        Double denominatorNorm = b.normF();
+        Double denominatorNorm = rightHandSide.normF();
 
         return (numeratorNorm / denominatorNorm) < tolerance;
     }

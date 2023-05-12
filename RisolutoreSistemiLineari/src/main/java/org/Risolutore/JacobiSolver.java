@@ -7,9 +7,17 @@ public class JacobiSolver {
     public static SimpleMatrix solve(SimpleMatrix inputMatrix, SimpleMatrix rightHandSide, int maxIterations, double tolerance) {
         SimpleMatrix currentSolution = new SimpleMatrix(inputMatrix.getNumRows(), 1);
 
-
+        //while()
 
         return currentSolution;
+    }
+
+    private static boolean converged(SimpleMatrix currentSolution, SimpleMatrix rightHandSide, SimpleMatrix inputMatrix, double tolerance) {
+        SimpleMatrix numerator = inputMatrix.mult(currentSolution).minus(rightHandSide);
+        Double numeratorNorm = numerator.normF();
+        Double denominatorNorm = rightHandSide.normF();
+
+        return (numeratorNorm / denominatorNorm) < tolerance;
     }
 
     public static SimpleMatrix getPMatrix(SimpleMatrix inputMatrix) {
