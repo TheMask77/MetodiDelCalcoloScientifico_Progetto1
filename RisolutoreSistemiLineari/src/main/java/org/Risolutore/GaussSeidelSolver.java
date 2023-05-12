@@ -8,22 +8,20 @@ public class GaussSeidelSolver {
         int n = inputMatrix.getNumCols();
         SimpleMatrix currentSolution = new SimpleMatrix(n, 1);
 
-
         SimpleMatrix pMatrix = getPMatrix(inputMatrix);
         SimpleMatrix nMatrix = getNMatrix(inputMatrix);
-
         SimpleMatrix invertedPMatrix = pMatrix.invert();
         SimpleMatrix T = invertedPMatrix.mult(nMatrix);
 
         SimpleMatrix C = invertedPMatrix.mult(rightHandSide);
 
         for (int iter = 0; iter < maxIterations; iter++) {
-            currentSolution = T.mult(currentSolution).plus(C);
-
             if (converged(currentSolution, rightHandSide, inputMatrix, tolerance)) {
-                System.out.println("Gauss-Seidel converged in " + (iter+1) + " iterations");
+                System.out.println("Gauss-Seidel converged in " + iter + " iterations");
                 return currentSolution;
             }
+
+            currentSolution = T.mult(currentSolution).plus(C);
         }
 
         System.out.println("Gauss-Seidel did not converge after " + maxIterations + " iterations");

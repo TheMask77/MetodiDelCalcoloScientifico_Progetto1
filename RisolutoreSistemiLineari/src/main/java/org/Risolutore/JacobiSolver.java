@@ -7,8 +7,20 @@ public class JacobiSolver {
     public static SimpleMatrix solve(SimpleMatrix inputMatrix, SimpleMatrix rightHandSide, int maxIterations, double tolerance) {
         SimpleMatrix currentSolution = new SimpleMatrix(inputMatrix.getNumRows(), 1);
 
-        //while()
+        SimpleMatrix pMatrix = getPMatrix(inputMatrix);
+        SimpleMatrix nMatrix = getNMatrix(inputMatrix);
+        SimpleMatrix invertedPMatrix = getInvertedPMatrix(inputMatrix);
 
+        for (int iter = 0; iter < maxIterations; iter++) {
+            if (converged(currentSolution, rightHandSide, inputMatrix, tolerance)) {
+                System.out.println("Jacobi converged in " + iter + " iterations");
+                return currentSolution;
+            }
+
+            currentSolution = currentSolution.plus(invertedPMatrix.mult(rightHandSide.minus(inputMatrix.mult(currentSolution))));
+        }
+
+        System.out.println("Jacobi did not converge after " + maxIterations + " iterations");
         return currentSolution;
     }
 

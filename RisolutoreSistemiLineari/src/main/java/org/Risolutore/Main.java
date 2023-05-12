@@ -9,7 +9,7 @@ public class Main {
         double tol;
 
         //Initializing
-        String inputFilePath ="D:/Download/Dati Progetto 1 Bis-20230418/testing.mtx";
+        String inputFilePath ="D:/Download/Dati Progetto 1 Bis-20230418/spa1.mtx";
         SimpleMatrix inputMatrix = Utils.loadSimpleMatrixFromFile(inputFilePath);
         new SimpleMatrix(inputMatrix.getNumRows(), 1);
         SimpleMatrix solverSolution;
@@ -24,18 +24,12 @@ public class Main {
         SimpleMatrix rightHandSide = inputMatrix.mult(exactSolution);
 
         //Other testing
-        inputMatrix.print();
-        JacobiSolver.getPMatrix(inputMatrix).print();
-        JacobiSolver.getInvertedPMatrix(inputMatrix).print();
-        JacobiSolver.getNMatrix(inputMatrix).print();
-
 
         //Testing the solver
-        /*
         long startTime = System.nanoTime();
         System.out.println("Starting now");
 
-        solverSolution = GaussSeidelSolver.solve(inputMatrix, rightHandSide, 20000, 0.0000000001);
+        solverSolution = JacobiSolver.solve(inputMatrix, rightHandSide, 20000, 0.0000000001);
 
         long endTime = System.nanoTime();
 
@@ -44,7 +38,6 @@ public class Main {
         solverSolution.transpose().print();
         System.out.println("Exact");
         exactSolution.transpose().print();
-         */
 
     }
 }
