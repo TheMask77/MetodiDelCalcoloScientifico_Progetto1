@@ -1,9 +1,6 @@
 package main;
 
-import solvers.ConjugateGradientSolver;
-import solvers.GaussSeidelSolver;
-import solvers.GradientSolver;
-import solvers.Solver;
+import solvers.*;
 import org.ejml.simple.SimpleMatrix;
 
 import java.io.File;
@@ -22,10 +19,10 @@ public class Main {
         long startTime;
         long endTime;
         SimpleMatrix inputMatrixTest;
-        SimpleMatrix exactSolutionTest = null;
-        SimpleMatrix rightHandSideTest = null;
-        SimpleMatrix startingSolutionTest = null;
-        SimpleMatrix solverSolutionTest = null;
+        SimpleMatrix exactSolution = null;
+        SimpleMatrix rightHandSide = null;
+        SimpleMatrix startingSolution = null;
+        SimpleMatrix solverSolution = null;
         Solver solver = null;
         String filePath = "";
 
@@ -35,24 +32,25 @@ public class Main {
 
         //Matrix Setup
         inputMatrixTest = Utils.loadSimpleMatrixFromFile(filePath);
-        exactSolutionTest = new SimpleMatrix(inputMatrixTest.getNumRows(), 1);
-        startingSolutionTest = new SimpleMatrix(inputMatrixTest.getNumRows(), 1);
+        exactSolution = new SimpleMatrix(inputMatrixTest.getNumRows(), 1);
+        startingSolution = new SimpleMatrix(inputMatrixTest.getNumRows(), 1);
         for (int i = 0; i < inputMatrixTest.getNumRows(); i++) {
-            exactSolutionTest.set(i, 0, 1);
-            startingSolutionTest.set(i, 0, 0);
+            exactSolution.set(i, 0, 1);
+            startingSolution.set(i, 0, 0);
         }
-        rightHandSideTest = inputMatrixTest.mult(exactSolutionTest);
+        rightHandSide = inputMatrixTest.mult(exactSolution);
 
         //Solution Calculation
         startTime = System.nanoTime();
         System.out.println("Starting now...");
-        solverSolutionTest = solver.solve(inputMatrixTest, rightHandSideTest, 20000, 0.00001);
+        solverSolution = solver.solve(inputMatrixTest, rightHandSide, 20000, 0.00001);
         endTime = System.nanoTime();
         System.out.println("Solutions found in " + (endTime - startTime)/1000000000 + " seconds");
+        System.out.println("Relative error ==> " + Utils.evaluateRelativeError(exactSolution, solverSolution));
         System.out.println("Solver");
-        solverSolutionTest.transpose().print();
+        solverSolution.transpose().print();
         System.out.println("Exact");
-        exactSolutionTest.transpose().print();
+        exactSolution.transpose().print();
     }
 
     private static String FileSelection() {
@@ -89,7 +87,7 @@ public class Main {
 
         //Solver Inizialization
         switch(answer){
-            case 1:
+            case 1: return new JacobiSolver();
             case 2: return new GaussSeidelSolver();
             case 3: return new GradientSolver();
             case 4: return new ConjugateGradientSolver();

@@ -10,7 +10,6 @@ public class GaussSeidelSolver extends Solver {
         SimpleMatrix currentSolution = new SimpleMatrix(n, 1);
         SimpleMatrix pMatrix = getPMatrix(inputMatrix);
         SimpleMatrix nMatrix = getNMatrix(inputMatrix);
-
         SimpleMatrix invertedPMatrix = pMatrix.invert();
         SimpleMatrix T = invertedPMatrix.mult(nMatrix);
 
@@ -23,6 +22,8 @@ public class GaussSeidelSolver extends Solver {
                 System.out.println("Gauss-Seidel converged in " + (iter+1) + " iterations");
                 return currentSolution;
             }
+
+            currentSolution = T.mult(currentSolution).plus(C);
         }
 
         System.out.println("Gauss-Seidel did not converge after " + maxIterations + " iterations");

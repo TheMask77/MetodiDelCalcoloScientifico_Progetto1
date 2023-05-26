@@ -92,5 +92,13 @@ public class Utils {
         return matrix;
 
     }
-    
+
+    public static double evaluateRelativeError(SimpleMatrix exactSolution, SimpleMatrix approxSolution) {
+        double relativeError = 0;
+
+        relativeError = exactSolution.minus(approxSolution).normF();
+
+        return relativeError;
+    }
+
 }
