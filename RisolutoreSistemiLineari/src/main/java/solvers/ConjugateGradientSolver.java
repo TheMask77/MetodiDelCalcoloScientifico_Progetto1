@@ -36,12 +36,12 @@ public class ConjugateGradientSolver extends Solver {
             d = r.minus(d.mult(beta));
 
             if (isConverged(x, b, A, tolerance)) {
-                System.out.println("Gradient method converged in " + (iteration+1) + " iterations");
+                System.out.println("CONJUGATE GRADIENT METHOD CONVERGED IN " + (iteration+1) + " ITERATIONS");
                 return x;
             }
 
         }
-        System.out.println("Conjugate Gradient method did not converge after " + maxIterations + " iterations");
+        System.out.println("CONJUGATE GRADIENT METHOD DID NOT CONVERGE AFTER " + maxIterations + " ITERATIONS");
         return x;
     }
 }

@@ -6,6 +6,7 @@ import org.ejml.simple.SimpleMatrix;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class Main {
@@ -45,8 +46,8 @@ public class Main {
     private static void MatrixEvaluation(Solver solver, String filePath, double tolerance) {
 
         int maxIterations = 20000;
-        long startTime;
-        long endTime;
+        double startTime;
+        double endTime;
         SimpleMatrix inputMatrixTest;
         SimpleMatrix exactSolution = null;
         SimpleMatrix rightHandSide = null;
@@ -69,19 +70,21 @@ public class Main {
         startTime = System.nanoTime();
         solverSolution = solver.solve(inputMatrixTest, rightHandSide, maxIterations, tolerance);
         endTime = System.nanoTime();
-        System.out.println("Solutions found in " + (endTime - startTime)/1000000000 + " seconds");
-        System.out.println("Relative error ==> " + Utils.evaluateRelativeError(exactSolution, solverSolution));
-        System.out.println("Solver");
+        System.out.println("TIME ELAPSED: " + new DecimalFormat("#####.##").format((endTime - startTime)/1000000000) + " s");
+        System.out.println("RELATIVE ERROR: " + Utils.evaluateRelativeError(exactSolution, solverSolution));
+        System.out.println("TOLERANCE: " + tolerance);
+
+        /*System.out.println("Solver");
         solverSolution.transpose().print();
         System.out.println("Exact");
-        exactSolution.transpose().print();
+        exactSolution.transpose().print();*/
     }
 
     private static double ToleranceSelection(){
 
         double[] tolerances = {0.0001, 0.000001, 0.00000001, 0.0000000001};
 
-        question = "Selezionare la tolleranza desiderata: ";
+        question = "Select a tolerance value: ";
         for(int i = 0; i < tolerances.length; i++){
             question += "\n" + (i + 1) + ") " + tolerances[i];
         }
@@ -97,13 +100,13 @@ public class Main {
         //File Selection
         File folder = new File(defaultFilePath);
         listOfFiles = folder.listFiles();
-        question = "Selezionare una delle seguenti matrici: ";
+        question = "Select one of the following matrices: ";
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile()) {
                 question += "\n" + (i + 1) + ") " + listOfFiles[i].getName();
             }
         }
-        question += "\n" + (listOfFiles.length + 1) + ") Tutti i file";
+        question += "\n" + (listOfFiles.length + 1) + ") All the above";
         do{
             System.out.println(question);
             answer = keyboard.nextInt();
@@ -119,11 +122,11 @@ public class Main {
 
     public static Solver MethodSelection(){
         do {
-            question = "Quale metodo risolutivo vuoi applicare?";
-            question += "\n1) Metodo di Jacobi";
-            question += "\n2) Metodo di Gauss-Seidel";
-            question += "\n3) Metodo del gradiente";
-            question += "\n4) Metodo del gradiente coniugato";
+            question = "Which method do you want to use?";
+            question += "\n1) Jacobi method";
+            question += "\n2) Gauss-Seidel method";
+            question += "\n3) Gradient method";
+            question += "\n4) Conjugate gradient method";
             System.out.println(question);
             answer = keyboard.nextInt();
         }while(answer < 1 || answer > 4);

@@ -21,12 +21,12 @@ public class GradientSolver extends Solver {
             x = x.plus(r.mult(div));
 
             if (isConverged(x, b, A, tolerance)) {
-                System.out.println("Gradient method converged in " + (iteration+1) + " iterations");
+                System.out.println("GRADIENT METHOD CONVERGED IN " + (iteration+1) + " ITERATIONS");
                 return x;
             }
 
         }
-        System.out.println("Gradient method did not converge after " + maxIterations + " iterations");
+        System.out.println("GRADIENT METHOD DID NOT CONVERGE AFTER " + maxIterations + " ITERATIONS");
         return x;
     }
 }

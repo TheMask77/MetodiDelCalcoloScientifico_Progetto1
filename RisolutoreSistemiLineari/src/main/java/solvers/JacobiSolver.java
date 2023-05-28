@@ -13,14 +13,14 @@ public class JacobiSolver extends Solver{
 
         for (int iter = 0; iter < maxIterations; iter++) {
             if (isConverged(currentSolution, rightHandSide, inputMatrix, tolerance)) {
-                System.out.println("Jacobi converged in " + iter + " iterations");
+                System.out.println("JACOBI METHOD CONVERGED IN " + iter + " ITERATIONS");
                 return currentSolution;
             }
 
             currentSolution = currentSolution.plus(invertedPMatrix.mult(rightHandSide.minus(inputMatrix.mult(currentSolution))));
         }
 
-        System.out.println("Jacobi did not converge after " + maxIterations + " iterations");
+        System.out.println("JACOBI METHOD DID NOT CONVERGE AFTER " + maxIterations + " ITERATIONS");
         return currentSolution;
     }
 

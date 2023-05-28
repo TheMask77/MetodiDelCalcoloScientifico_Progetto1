@@ -19,14 +19,14 @@ public class GaussSeidelSolver extends Solver {
             currentSolution = T.mult(currentSolution).plus(C);
 
             if (isConverged(currentSolution, rightHandSide, inputMatrix, tolerance)) {
-                System.out.println("Gauss-Seidel converged in " + (iter+1) + " iterations");
+                System.out.println("GAUSS-SEIDEL CONVERGED IN " + (iter+1) + " ITERATIONS");
                 return currentSolution;
             }
 
             currentSolution = T.mult(currentSolution).plus(C);
         }
 
-        System.out.println("Gauss-Seidel did not converge after " + maxIterations + " iterations");
+        System.out.println("GAUSS-SEIDEL DI NOT CONVERGE AFTER " + maxIterations + " ITERATIONS");
         return currentSolution;
     }
 
