@@ -96,7 +96,7 @@ public class Utils {
     public static double evaluateRelativeError(SimpleMatrix exactSolution, SimpleMatrix approxSolution) {
         double relativeError = 0;
 
-        relativeError = exactSolution.minus(approxSolution).normF();
+        relativeError = (approxSolution.minus(exactSolution).normF()) / exactSolution.normF();
 
         return relativeError;
     }
